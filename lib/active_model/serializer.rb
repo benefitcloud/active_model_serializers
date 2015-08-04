@@ -175,7 +175,7 @@ module ActiveModel
     end
 
     def id
-      object.id if object
+      object.id if object && !object.respond_to?(:to_ary)
     end
 
     def type
