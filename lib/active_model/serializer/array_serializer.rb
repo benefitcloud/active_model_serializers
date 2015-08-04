@@ -28,7 +28,7 @@ module ActiveModel
 
       def json_key
         key = root || @objects.first.try(:json_key) || @resource.try(:name).try(:underscore)
-        key.try(:pluralize)
+        root ? key : key.try(:pluralize)
       end
     end
   end
