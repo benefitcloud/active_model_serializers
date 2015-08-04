@@ -135,6 +135,8 @@ module ActiveModel
       adapter_class = case config.adapter
       when Symbol
         ActiveModel::Serializer::Adapter.adapter_class(config.adapter)
+      when String
+        config.adapter.constantize rescue nil
       when Class
         config.adapter
       end
