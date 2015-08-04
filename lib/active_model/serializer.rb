@@ -247,7 +247,7 @@ module ActiveModel
 
     def self.get_serializer_for(klass)
       serializers_cache.fetch_or_store(klass) do
-        serializer_class_name = "#{klass.name}Serializer"
+        serializer_class_name = build_class_name(klass)
         serializer_class = serializer_class_name.safe_constantize
 
         if serializer_class
@@ -258,5 +258,12 @@ module ActiveModel
       end
     end
 
+    def self.build_class_name(klass)
+      "".tap do |klass_name|
+        klass_name << "#{config.default_namespace}::" if config.default_namespace
+        klass_name << "#{klass.name.demodulize}"
+        klass_name << config.default_postfix
+      end
+    end
   end
 end
